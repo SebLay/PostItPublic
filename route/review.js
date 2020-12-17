@@ -29,7 +29,7 @@ const router = new Router;
  */
 
 
-router.get('/ReviewUserGet/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ReviewController.getReview);
+router.get('/ReviewUserGet/:id', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ReviewController.getReview);
 
 /**
  * @swagger
