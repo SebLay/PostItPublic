@@ -35,7 +35,7 @@ const pool = require ("../modele/database");
 
 module.exports.getReview = async(req, res) => {
     const client = await pool.connect();
-    const userId_Receiver = req.body.id;
+    const userId_Receiver = parseInt(req.params.id);
     try{
         const {rows: reviews} =await ReviewModel.getReview(userId_Receiver,client);
         reviewsTrouble = false;
