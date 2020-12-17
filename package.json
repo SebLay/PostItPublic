@@ -1,0 +1,35 @@
+{
+  "name": "postit_api",
+  "version": "1.0.0",
+  "description": "Api pour techno Backend",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-promise-router": "^4.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.6",
+    "pg": "^8.4.2"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^6.0.0-rc.3"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "initDB": "node scripts/JS/initDB.js",
+    "genDoc": "node swagger/swagger_jsdoc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SebLay/PostIt_Api.git"
+  },
+  "author": "Sebastien Lannoy & Aurelien Champagne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SebLay/PostIt_Api/issues"
+  },
+  "homepage": "https://github.com/SebLay/PostIt_Api#readme"
+}
