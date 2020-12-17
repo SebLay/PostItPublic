@@ -57,6 +57,7 @@ module.exports.login = async (req, res)=>{
                 res.json(token);
             }
         } catch(error){
+            console.log(error);
             res.sendStatus(500);
         } finally{
             client.release();
