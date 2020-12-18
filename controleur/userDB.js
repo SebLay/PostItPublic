@@ -324,7 +324,7 @@ module.exports.updateUser = async (req, res) =>{
 
     module.exports.updateOtherUser= async(req,res)=>{
         const upToDate = req.body;
-        const id = req.body.id;
+        const id = parseInt(req.params.id);
         const newData = {};
         let doUpdate = false;
         if(id!== undefined &&(
@@ -401,7 +401,7 @@ module.exports.updateUser = async (req, res) =>{
  */
 module.exports.deleteUser = async (req,res) => {
     const client = await pool.connect();
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     try{
         if(isNaN(id)){
             res.sendStatus(400);
