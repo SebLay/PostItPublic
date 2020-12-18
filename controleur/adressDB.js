@@ -64,6 +64,7 @@ module.exports.getAdress = async(req,res) =>{
     const id = parseInt(req.params.id);
     try{
         if(isNaN(id)){
+            console.log("l'id reçu n'est pas une fonction");
             res.sendStatus(400);
         }
         else{
@@ -73,11 +74,13 @@ module.exports.getAdress = async(req,res) =>{
                 res.json(adress);
             }
             else{
+                console.log("adresse non trouvée");
                 res.sendStatus(404);
             }
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -125,6 +128,7 @@ module.exports.addAdress = async(req,res)=>{
         res.sendStatus(201);
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -154,6 +158,7 @@ module.exports.updateAdress = async (req,res)=>{
         res.sendStatus(204);
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -176,6 +181,7 @@ module.exports.deleteAdress = async (req,res) =>{
     const id = parseInt(req.params.id);
     try{
         if(isNaN(id)){
+            console.log("id n'est pas un nombre");
             res.sendStatus(400);
         }
         const reponse = await AdressModel.deleteAdress(id,client);
@@ -183,10 +189,12 @@ module.exports.deleteAdress = async (req,res) =>{
             res.sendStatus(204);
         }
         else{
+            console.log("erreur lors de la supperssion");
             res.sendStatus(500);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{

@@ -63,6 +63,7 @@ module.exports.getAnnonce = async (req, res) =>{
     const id = parseInt(idTexte);
     try{
         if(isNaN(id)){
+            console.log("l'id reçu n'est pas un nombre");
             res.sendStatus(400);
         }
         else{
@@ -72,11 +73,13 @@ module.exports.getAnnonce = async (req, res) =>{
                 res.json(annonce)
             }
             else{
+                console.log("annonce non trouvée");
                 res.sendStatus(404);
             }
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -107,10 +110,12 @@ module.exports.getMesAnnonces = async (req, res)=>{
             res.json(annonces);
         }
         else{
+            console.log("annonce non trouvée");
             res.sendStatus(404)
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -166,11 +171,13 @@ module.exports.postAnnonce = async (req,res) => {
         }
         else{
             await client.query("ROLLBACK");
+            console.log("annonce non trouvée")
             res.status(404).json({error: "l'id du user ou de l'adresse n'existe pas"})
         }
     }
     catch(error){
         await client.query("ROLLBACK;");
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -233,18 +240,20 @@ module.exports.updateAnnonce = async(req,res) =>{
                 }
                 else{
                     await client.query("ROLLBACK");
+                    console.log("annonce non trouvée");
                     res.status(404).json({error: "vous ne disposez pas des droits de modification de cette annonce"});
                 }
            }
            catch(error){
-               res.sendStatus(500);
                console.log(error);
+               res.sendStatus(500);
            }
            finally{
                client.release();
            }
         }
         else{
+            console.log("pas de maj a faire")
             res.sendStatus(401);
         }
     }
@@ -268,6 +277,7 @@ module.exports.deleteAnnonce = async(req,res) => {
     const userConnectedId = req.session.userid
     try{
        if(isNaN(idAd)){
+           console.log("id reçu n'est pas un nombre");
            res.sendStatus(400);
        }
         await client.query("BEGIN");
@@ -278,22 +288,26 @@ module.exports.deleteAnnonce = async(req,res) => {
             if(reponse1){
                 const reponse2 = await AnnonceModele.deleteAnnonce(idAd,client);
                 if(reponse2){
-                    res.sendStatus(204);
                     await client.query("COMMIT");
+                    res.sendStatus(204);
+
 
                 }
                 else{
                     await client.query("ROLLBACK");
+                    console.log("pas possible de supprimmer l'annonce");
                     res.sendStatus(500);
                 }
             }
             else{
                 await client.query("ROLLBACK");
+                console.log("annonce non trouvée");
                 res.sendStatus(404);
             }
         }
         else{
             await client.query("ROLLBACK");
+            console.log("vous n'avez pas les droits");
             res.status(403).json({error:"vous ne pouvez pas supprimmer cette annonce"});
         }
     }

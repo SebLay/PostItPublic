@@ -18,10 +18,12 @@ module.exports.getMessage = async(req, res)=>{
             res.json(messages)
         }
         else{
+            console.log("erreur lors des message");
             res.sendStatus(400);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -38,10 +40,12 @@ module.exports.addMessage = async(req,res) =>{
             res.sendStatus(201);
         }
         else{
+            console.log("pas possible d'ajouter ce message");
             res.sendStatus(400);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -58,10 +62,12 @@ module.exports.updateMessage = async(req,res) =>{
             res.sendStatus(204);
         }
         else{
+            console.log("probleme lors de la maj du message");
             res.sendStatus(500);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -78,10 +84,12 @@ module.exports.deleteMessage = async (req,res) =>{
             res.sendStatus(204);
         }
         else{
+            console.log("probleme lors de la suppression du message");
             res.sendStatus(500);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{

@@ -27,6 +27,7 @@ module.exports.getCategory = async(req,res) =>{
     const annonceId = parseInt(req.params.annonceId);
     try{
         if(isNaN(annonceId)){
+            console.log("annonceid n'est pas un nombre");
             res.sendStatus(400);
         }
         else{
@@ -42,6 +43,7 @@ module.exports.getCategory = async(req,res) =>{
                 res.json(categories);
             }
             else{
+                console.log("il y a eu un soucis lors de la récupération des catégories");
                 res.sendStatus(400)
             }
         }
@@ -89,11 +91,12 @@ module.exports.updateCategory = async(req,res) =>{
     const client = await pool.connect();
     const {annonceId, categoryWording} = req.body;
     try{
-        const reponse = await Annonce_CategoryModel.updateCategory(annonceId, categoryWording);
+        const reponse = await Annonce_CategoryModel.updateCategory(annonceId, categoryWording,clieny);
         if(reponse){
             res.sendStatus(201);
         }
         else{
+            console.log("erreur lors de la mise a jour");
             res.sendStatus(400);
         }
     }catch(error){
@@ -110,6 +113,7 @@ module.exports.deleteAnnonceCategory = async (req,res) =>{
     const {annonceId, categoryWording} = req.body;
     try{
         if(isNaN(annonceId)){
+            console.log("l'id donné n'est pas un nombre");
             res.sendStatus(400);
         }
         const reponse = await Annonce_CategoryModel.deleteAnnonceCatgory(annonceId,categoryWording, client);
@@ -117,6 +121,7 @@ module.exports.deleteAnnonceCategory = async (req,res) =>{
             res.sendStatus(204);
         }
         else{
+            console.log("il y a eu un probleme lors de la suppression");
             res.sendStatus(500)
         }
     }

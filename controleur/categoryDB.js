@@ -59,10 +59,12 @@ module.exports.getCategory = async(req,res) =>{
             res.json(category);
             }
         else{
+            console.log("categorie non trouvée");
             res.sendStatus(404);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -91,10 +93,12 @@ module.exports.getAllCategory = async(req, res) => {
             res.json(categories);
         }
         else{
+            console.log("pas de categorie trouvées");
             res.sendStatus(404);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -125,8 +129,9 @@ module.exports.addCategory = async(req,res) =>{
         res.sendStatus(201);
     }
     catch(error){
-        res.sendStatus(500);
         console.log(error);
+        res.sendStatus(500);
+
     }
     finally{
         client.release();
@@ -156,6 +161,7 @@ module.exports.updateCategory = async (req,res) => {
         res.sendStatus(204);
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -180,10 +186,12 @@ module.exports.deleteCategory = async (req,res) => {
             res.sendStatus(204);
         }
         else{
+            console.log("pas possible de supprimer la catégorie");
             res.sendStatus(500);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{

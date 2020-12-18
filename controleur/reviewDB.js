@@ -49,10 +49,12 @@ module.exports.getReview = async(req, res) => {
             res.json(reviews)
         }
         else{
+            console.log("probleme lors de la récuperation des review");
             res.sendStatus(400);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -64,7 +66,7 @@ module.exports.getReview = async(req, res) => {
 
 module.exports.getReviewISend = async(req,res)=>{
     const client = await pool.connect();
-    const userid_sender = req.body.id;
+    const userid_sender = req.params.id;
     try{
         const{rows: reviews} = await ReviewModel.getReviewsISend(userid_sender, client);
         reviewsTrouble = false;
@@ -78,10 +80,12 @@ module.exports.getReviewISend = async(req,res)=>{
             res.json(reviews)
         }
         else{
+            console.log("pas de review trouvées");
             res.sendStatus(404);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -135,15 +139,17 @@ module.exports.addReview = async (req, res) =>{
             }
             else{
                 client.query("ROLLBACK");
-                res.sendStatus(400);
+                console.log("pas possible d'ajouter cette review");
             }
         }
         else{
             client.query("ROLLBACK");
+            console.log( "vous avez deja jugé cet utilisateur")
             res.status(400).json({error:"Vous avez déja jugé cette personne "});
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -206,11 +212,13 @@ module.exports.updateReview = async (req, res) => {
                 }
                 else{
                     client.query("ROLLBACK");
+                    console.log("Aucun avis trouvé");
                     res.status(401).json({error: "Aucun avis trouvé"});
                 }
            }
             catch(error){
                 client.query("ROLLBACK");
+                console.log(error);
                 res.sendStatus(500);
             }
             finally{
@@ -218,6 +226,7 @@ module.exports.updateReview = async (req, res) => {
            }
         }
         else{
+            console.log("pas poddible d'effectuer la mise a jour")
             res.sendStatus(401);
         }
 
@@ -236,20 +245,23 @@ module.exports.updateReview = async (req, res) => {
  */
 module.exports.deleteReview = async (req,res) =>{
     const client = await pool.connect();
-    const userid_sender = req.session.userid
-    const{userid_receiver} = req.params.userId_Receiver;
+    const userid_sender = parseInt(req.params.userId_Sender);
+    const userid_receiver = parseInt(req.params.userId_Receiver);
+    console.log(userid_receiver , userid_sender);
     try{
         const reponse = await ReviewModel.deleteReview(userid_receiver, userid_sender, client);
         if(reponse){
                res.sendStatus(204);
         }
         else{
+             console.log("not found");
              res.sendStatus(404);
            
         }
     }
     catch(error){
-            res.sendStatus(500)
+        console.log(error)
+        res.sendStatus(500)
     }
     finally{
         client.release();

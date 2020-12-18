@@ -68,10 +68,12 @@ module.exports.getSpecifiedUser = async(req,res) =>{
                     res.json(user);
                 }
                 else{
+                    console.log("utilisateur non trouvé");
                     res.sendStatus(404);
                 }
            }
            else{
+               console.log("vous n'avez pas les droit pour consulter ce profil")
                res.status(500).json({error: "vous n'avez pas les droit pour consulter ce profil"});
            }
         }
@@ -102,6 +104,7 @@ module.exports.getUser = async(req,res) =>{
                 }
            }
            else{
+               console.log("vous n'avez pas les droit pour consulter ce profil");
                res.status(500).json({error: "vous n'avez pas les droit pour consulter ce profil"});
            }
         }
@@ -142,6 +145,7 @@ module.exports.createUser = async(req, res) => {
         }
         else{
             await client.query("ROLLBACK");
+            console.log("un utilisateur a déja utilisé votre email");
             res.status(404).json({error:"un utilisateur utilise déja votre email."});
         }
     }

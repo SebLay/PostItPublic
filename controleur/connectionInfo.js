@@ -39,11 +39,13 @@ module.exports.getPrecisedConnectionInfo = async (req,res) =>{
             res.json(pseudo);
         }
         else{
+            console.log("pas de pseudo trouvés");
             res.sendStatus(404);
         }
     }
     catch(error){
-       res.sendStatus(500);
+        console.log(error);
+        res.sendStatus(500);
     }
     finally{
         client.release();
@@ -61,14 +63,17 @@ module.exports.getConnectionInfo = async(req,res) =>{
                     res.json(connected);
                 }
                 else{
+                    console.log("pas de connexionInfo trouvées");
                     res.sendStatus(404);
                 }
            }
            else{
+               console.log("vous ne pouvez pas acceder à ces infos");
                res.status(500).json({error: "vous n'avez pas les droits pour consulter ces informations"});
            }
         }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -81,6 +86,7 @@ module.exports.getPrecisedPseudo = async(req,res) =>{
     const id = parseInt(req.params.id);
     try{
         if(isNaN(id)){
+            console.log("l'id reçu n'est pas un nombre");
             res.sendStatus(400);
         }
         else{
@@ -90,13 +96,15 @@ module.exports.getPrecisedPseudo = async(req,res) =>{
                 res.json(pseudo);
             }
             else{
+                console.log("pas de pseudos trouvés");
                 res.sendStatus(404);
             }
         }
     }
     catch(error){
-        res.sendStatus(500);
         console.log(error);
+        res.sendStatus(500);
+
     }
     finally{
         client.release();
@@ -111,10 +119,12 @@ module.exports.getAllPseudo  = async(req,res)=>{
             res.json(pseudos);
         }
         else {
+            console.log("pas de pseudos trouves");
             res.sendStatus(404);
         }
     }
     catch(error){
+        console.log(error);
         res.sendStatus(500);
     }
     finally{
@@ -162,21 +172,25 @@ module.exports.addConnectionInfo = async (req , res) =>{
                 }
                 else{
                   await client.query("ROLLBACK");
+                  console.log("erreur lors de l'ajouts de infos de connection");
                     res.sendStatus(500);
                 }
             }
             else{
                 await client.query("ROLLBACK");
+                console.log("cet utilisateur a déja des infos de connnextion");
                 res.status(500).json({error: "cet utilisateur dispose déja d'information de connection"})
             }
         }
         else{
             await client.query("ROLLBACK");
+            console.log("psuedo déja utilisé")
             res.status(500).json({error: "votre pseudo est déja utilisé"});
         }
     }
     catch(error){
         await client .query("ROLLBACK");
+        console.log(error);
         res.sendStatus(500); 
     }
     finally{
@@ -223,6 +237,7 @@ module.exports.updatePassword = async (req, res) =>{
                res.sendStatus(201);
            }
            catch(error){
+               console.log(error);
                res.sendStatus(500)
            }
            finally{
@@ -230,6 +245,7 @@ module.exports.updatePassword = async (req, res) =>{
            }
        }
        else{
+           console.log("pas de besoin d'update");
            res.sendStatus(401);
        } 
    }
@@ -246,10 +262,12 @@ module.exports.deleteConnectionInfo = async (req,res) =>{
              res.sendStatus(204);
          }
          else{
+             console.log("pas possible de supprimer cela")
              res.sendStatus(500);
          }
      }
      catch(error){
+         console.log(error);
          res.sendStatus(500);
      }
      finally{
