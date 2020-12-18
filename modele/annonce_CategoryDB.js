@@ -10,6 +10,11 @@ module.exports.addAnnonceCategory = async (annonceId,categoryWording, client) =>
     return true;
 }
 
+module.exports.updatecategory = async (annonceId,categoryWording,client) =>{
+    await client.query("UPDATE FROM AnnonceCategory WHERE annonceID = $1 and categoryWording = $2",[annonceId,categoryWording])
+    return true;
+}
+
 module.exports.deleteAnnonceCatgory = async (annonceId,CategoryWording, client)=>{
     await client.query("DELETE FROM AnnonceCategory WHERE annonceId = $1 and categoryWording = $2",[annonceId,CategoryWording]);
     return true;
