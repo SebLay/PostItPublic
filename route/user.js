@@ -94,10 +94,17 @@ router.post('/', UserController.createUserWithPseudo);
 router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, UserController.updateUser);
 
 /**
- * /user/otherUser/:
+ * /user/{id}:
  *  patch:
  *      tags:
  *          - User
+ *      params:
+ *          - name: id
+ *            description: id de l'utilisateur
+ *            in: path
+ *            required: true
+ *            schema:
+ *              type: integer
  *      requestBody:
  *          $ref: '#/components/requestBodies/majUser'
  *      response:
@@ -108,7 +115,7 @@ router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer,
  *          401:
 *               $ref: '#/components/responses/noMaj2'
  */
-router.patch('/otherUser/', MiddlewareAuth.identification,MiddlewareId.mustbeAdmin,UserController.updateOtherUser);
+router.patch('/:id', MiddlewareAuth.identification,MiddlewareId.mustbeAdmin,UserController.updateOtherUser);
 /**
  * @swagger
  * /user/{id}:
