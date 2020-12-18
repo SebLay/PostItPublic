@@ -7,7 +7,6 @@ const ReviewRouter = require('./review');
 const MessagesRouter = require('./message');
 const ConnectionInfoRouter = require('./connectionInfo');
 const LoginRouter = require('./login');
-const UtilsAdminRouter = require('./utilsAdmin');
 const router = require("express").Router();
 
 router.use("/annonce",AnnonceRouter);
@@ -19,6 +18,5 @@ router.use("/review",ReviewRouter);
 router.use("/message", MessagesRouter);
 router.use("/connect_Info", ConnectionInfoRouter);
 router.use("/login", LoginRouter);
-router.use("/utilsAdmin",UtilsAdminRouter);
 
 module.exports=router;

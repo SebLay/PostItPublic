@@ -92,7 +92,23 @@ router.post('/', UserController.createUserWithPseudo);
  *                  $ref: '#/components/responses/noMaj2'
  */
 router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, UserController.updateUser);
-router.patch('/otherUser', MiddlewareAuth.identification,MiddlewareId.mustbeAdmin,UserController.updateOtherUser);
+
+/**
+ * /user/otherUser/:
+ *  patch:
+ *      tags:
+ *          - User
+ *      requestBody:
+ *          $ref: '#/components/requestBodies/majUser'
+ *      response:
+  *         500:
+ *              $ref: '#/components/responses/ErreurServ'
+ *          400:
+ *              $ref: '#/components/responses/noMaj1'
+ *          401:
+*               $ref: '#/components/responses/noMaj2'
+ */
+router.patch('/otherUser/', MiddlewareAuth.identification,MiddlewareId.mustbeAdmin,UserController.updateOtherUser);
 /**
  * @swagger
  * /user/{id}:

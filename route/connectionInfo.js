@@ -55,7 +55,57 @@ router.get('/:pseudo',MiddlewareAuth.identification, MiddlewareId.mustbeAdmin ,C
 
 router.get('/',MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ConnectionInfoController.getConnectionInfo);
 
+/**
+ * @swagger
+ * /connect_info/{id}:
+ *  get:
+ *      tags:
+ *          - Connection_Info
+ *      summary: recupere les infos
+ *      parameters:
+ *          - name: id
+ *            description: id de l'utilisateurs
+ *            in: path
+ *            required : true
+ *            schema:
+ *              type: integer
+ *      responses:
+ *          201:
+ *              $ref: '#/components/responses/infoFound'
+ *          400:
+ *              description: "l'id reçu n'est pas un nombre"
+ *          404:
+ *              description: pas de pseudo trouve
+ *          500:
+ *              $ref: '#/components/responses/ErreurServ'        
+ */
+
 router.get('/pseudo/:id',MiddlewareAuth.identification, MiddlewareId.mustbeAdmin, ConnectionInfoController.getPrecisedPseudo);
+
+/**
+ * @swagger
+ * /connection_info/all:
+ *      get:
+ *          tags:
+ *              - Connection_Info
+ *          summary: recupere tous les pseudos
+ *          responses:
+ *              201:
+ *                  description: renvoie tous les pseudos de la DB
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type : array
+ *                              items: 
+ *                                  type: string
+ *                              
+ *              400:
+ *                  description: "l'id reçu n'est pas un nombre"
+ *              404:
+ *                  description: pas de pseudo trouve
+ *              500:
+ *                  $ref: '#/components/responses/ErreurServ' 
+ */
 
 router.get('/all', MiddlewareAuth.identification, MiddlewareId.mustbeAdmin, ConnectionInfoController.getAllPseudo);
 /**

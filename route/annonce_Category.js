@@ -44,7 +44,37 @@ router.get('/:annonceId', MiddlewareAuth.identification, MiddlewareId.mustbeAtLe
 
 router.post('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer , Annonce_CategoryController.addCategoryToAnnnonce);
 
+/**
+ * @swagger
+ * /annonce_Category/:
+ *  patch:
+ *      tags:
+ *          - Annonce_Category
+ *      requestBody:
+ *          $ref: '#/components/requestBodies/addCategoryToAnnonce'
+ *      responses:
+ *          201:
+ *              description : categorie modifiée
+ *          500:
+ *              $ref: '#/components/responses/ErreurServ'
+ */
+
 router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, Annonce_CategoryController.updateCategory);
+
+/**
+ * @swagger
+ * /annonce_Category/:
+ *  delete:
+ *      tags:
+ *          - Annonce_Category
+ *      responses:
+ *          201: 
+ *              description: suppression réussie
+ *          400:
+ *              description: erreur lors de la mise a jour
+ *          500:
+ *              $ref: '#/components/responses/ErreurServ'
+ */
 
 router.delete('/',MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, Annonce_CategoryController.deleteAnnonceCategory);
 

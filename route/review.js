@@ -8,14 +8,14 @@ const router = new Router;
 
 /**
  * @swagger
- *  /review/MyReview/:
+ *  /review/MyReview/{userIdReceiver}:
  *      get:
  *          tags:
  *              - Review
  *          parameters:
  *              - name: userIdReceiver
  *                description: "c'est le user id de l'utilisateur connecté"
- *                in: header
+ *                in: path
  *                required: true
  *                schema:
  *                  type: integer
@@ -33,14 +33,14 @@ router.get('/ReviewUserGet/:id', MiddlewareAuth.identification, MiddlewareId.mus
 
 /**
  * @swagger
- * /review/ReviewISend/:
+ * /review/ReviewISend/{userIdSender}:
  *  get:
  *      tags:
  *          - Review
  *      parameters:
  *          - name: userIdSender
  *            description: "id de l'utilisateur connecte"
- *            in: header
+ *            in: path
  *            required: true
  *            schema:
  *              type: integer
@@ -53,7 +53,7 @@ router.get('/ReviewUserGet/:id', MiddlewareAuth.identification, MiddlewareId.mus
  *                  $ref: '#/components/responses/ErreurServ'
  *              
  */
-router.get('/ReviewUserSend/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ReviewController.getReviewISend);
+router.get('/ReviewUserSend/:id', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ReviewController.getReviewISend);
 
 /**
  * @swagger
@@ -108,7 +108,7 @@ router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer,
 
 /**
  * @swagger
- *  /review/{userId_Receiver}:
+ *  /review/{userId_Sender}/{userId_Receiver}:
  *      delete:
  *          tags:
  *              - Review
@@ -121,7 +121,8 @@ router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer,
  *                  type: integer
  *              - name: userId_Sender
  *                description: "id de l'utilisateur connecte"
- *                in: header
+ *                in: path
+ *                required: true
  *                schema:
  *                  type: integer
  *          responses:
@@ -132,6 +133,6 @@ router.patch('/', MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer,
  *              500: 
  *                  $ref: '#/components/responses/ErreurServ'
  */
-router.delete('/:userId_Receiver',MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ReviewController.deleteReview);
+router.delete('/:userId_Sender/:userId_Receiver',MiddlewareAuth.identification, MiddlewareId.mustbeAtLeastUSer, ReviewController.deleteReview);
 
 module.exports = router;
