@@ -227,7 +227,7 @@ module.exports.updateAnnonce = async(req,res) =>{
                 await client.query("BEGIN");
                 const {rows : owner} = await AnnonceModele.adOwner(upToDate.id, client);
                 const adOwner = owner[0].userid;
-                if(adOwner == userObj.userid){
+                if((userObj.authLevel === "admin") || adOwner == userObj.userid){
                     await AnnonceModele.updateAnnonce(
                     upToDate.id,
                     newData.title,
@@ -240,7 +240,7 @@ module.exports.updateAnnonce = async(req,res) =>{
                 }
                 else{
                     await client.query("ROLLBACK");
-                    console.log("annonce non trouvée");
+                    console.log("vous ne pouez pas mettre a jour cette annonce car vous n'etes pas admin ou le proprietaire de cette annonce");
                     res.status(404).json({error: "vous ne disposez pas des droits de modification de cette annonce"});
                 }
            }
